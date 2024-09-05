@@ -1,2 +1,20 @@
-export const pokemonTypes = ['bug', 'dragon', 'fairy', 'fire', 'ghost', 'ground', 'normal', 'psychic', 'steel', 'dark', 'electric', 'fighting', 'flying', 'grass', 'ice', 'poison', 'rock', 'water'];
-
+export const pokemonTypes = [
+  "Bug",
+  "Dragon",
+  "Fairy",
+  "Fire",
+  "Ghost",
+  "Ground",
+  "Normal",
+  "Psychic",
+  "Steel",
+  "Dark",
+  "Electric",
+  "Fighting",
+  "Llying",
+  "Grass",
+  "Ice",
+  "Poison",
+  "Rock",
+  "Water",
+];

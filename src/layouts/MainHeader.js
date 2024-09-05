@@ -18,7 +18,7 @@ import PetsIcon from '@mui/icons-material/Pets';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import { ListItemIcon, ListItemText } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const pages = [
     ['Home', PetsIcon, grey[500], '/'],
@@ -56,7 +56,7 @@ const styles = {
 
 export const MainHeader = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-
+    const navigate = useNavigate()
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -64,6 +64,7 @@ export const MainHeader = () => {
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
+        navigate("/")
     };
 
 

@@ -4,10 +4,11 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import FormProvider from "../components/form/FormProvider";
 import FTextField from "../components/form/FTextField";
-import { useForm } from "react-hook-form";
-import { Typography } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
+import { InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { editPokemon } from "../features/pokemons/pokemonSlice";
+import { pokemonTypes } from "../pokemonTypes";
 
 const style = {
   position: "absolute",
@@ -25,22 +26,24 @@ export default function PokemonEdit({ pokemon }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+
   const defaultValues = {
     name: pokemon?.name || "",
     url: pokemon?.url || "",
-    description : pokemon?.description
+    type1: pokemon?.types[0] || "",
+    type2: pokemon?.types[1] || "",
   };
 
   const dispatch = useDispatch();
   const methods = useForm({ defaultValues });
-  const { handleSubmit } = methods;
+  const { handleSubmit, control } = methods;
 
   const onSubmit = (data) => {
-    dispatch(editPokemon({ ...data, id: pokemon.id }));
+    const { type1, type2, ...rest } = data;
+    const types = [type1, type2].filter(Boolean);
+    dispatch(editPokemon({ ...rest, types, id: pokemon?.id}));
     handleClose();
   };
-
   return (
     <div>
       <Button
@@ -58,11 +61,57 @@ export default function PokemonEdit({ pokemon }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography sx={{ textAlign: "center" }}>Edit Post</Typography>
+          <Typography sx={{ textAlign: "center" }}>Edit Pokemon</Typography>
           <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <FTextField name="name" placeholder="Name" />
             <FTextField name="url" placeholder="URL" />
-            <FTextField name="description" placeholder="description" />
+
+            <InputLabel id="type1-label">Type 1</InputLabel>
+            <Controller
+              name="type1"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  labelId="type1-label"
+                  id="type1-select"
+                  fullWidth
+                >
+                  <MenuItem value=""></MenuItem>
+                  {pokemonTypes.map((type, index) => (
+                    <MenuItem key={index} value={type}>
+                      {type}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+            />
+
+            <InputLabel id="type2-label" sx={{ marginTop: "10px" }}>
+              Type 2
+            </InputLabel>
+            <Controller
+              name="type2"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  labelId="type2-label"
+                  id="type2-select"
+                  fullWidth
+                >
+                  <MenuItem value=""></MenuItem>
+                  {pokemonTypes.map((type, index) => (
+                    <MenuItem key={index} value={type}>
+                      {type}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+            />
+
             <Button
               type="submit"
               variant="contained"

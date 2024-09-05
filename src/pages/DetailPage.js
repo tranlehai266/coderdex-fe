@@ -33,6 +33,8 @@ export const DetailPage = () => {
     dispatch(getPokemonById(id));
   }, [id, dispatch]);
 
+  
+
   const weaknesses = calculateWeaknesses(pokemon?.types);
   return (
     <Container maxWidth="lg" disableGutters sx={styles.container}>
@@ -171,8 +173,10 @@ export const DetailPage = () => {
                 }}
               />
             </Box>
+
             <PokemonEdit pokemon={pokemon} />
             <PokemonDelete pokemon={pokemon} />
+
           </Grid>
           <Grid item xs={12} md={6}>
             <Stack spacing={2}>
