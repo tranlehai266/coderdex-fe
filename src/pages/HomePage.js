@@ -3,7 +3,7 @@ import { PageTitle } from '../components/PageTitle';
 import PokeList from '../components/PokeList';
 import { SearchBox } from '../components/SearchBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { editPokemon, getPokemons } from '../features/pokemons/pokemonSlice';
+import {  getPokemons } from '../features/pokemons/pokemonSlice';
 
 export const HomePage = () => {
 	const { search, page, type } = useSelector((state) => state.pokemons);
