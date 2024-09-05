@@ -26,11 +26,14 @@ export default function PokemonDelete({ pokemon }) {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const handleDelete = () => {
-    console.log(pokemon);
-    dispatch(deletePokemon(pokemon));
+  const handleDelete = async () => {
+    try {
+    await dispatch(deletePokemon(pokemon));
     navigate("/");
     handleClose();
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (

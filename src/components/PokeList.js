@@ -3,12 +3,12 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Container, Grid, Stack } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { PokeType } from './PokeType';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePage, typeQuery } from '../features/pokemons/pokemonSlice';
+import { changePage,  typeQuery } from '../features/pokemons/pokemonSlice';
 import { Link } from 'react-router-dom';
 import { pokemonTypes } from '../pokemonTypes';
 const styles = {
@@ -121,6 +121,7 @@ export default function PokeList() {
     const handleChangePage = () => {
         dispatch(changePage());
     };
+    
 
     return (
         <Container maxWidth="lg" sx={styles.container}>

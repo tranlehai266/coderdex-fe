@@ -10,6 +10,7 @@ export const HomePage = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(getPokemons({ page, search, type }));
+
 	}, [page, search, type, dispatch]);
 	return (
 		<>
