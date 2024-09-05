@@ -38,11 +38,16 @@ export default function PokemonEdit({ pokemon }) {
   const methods = useForm({ defaultValues });
   const { handleSubmit, control } = methods;
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const { type1, type2, ...rest } = data;
     const types = [type1, type2].filter(Boolean);
-    dispatch(editPokemon({ ...rest, types, id: pokemon?.id}));
-    handleClose();
+    try {
+      
+      await dispatch(editPokemon({ ...rest, types, id: pokemon?.id}));
+      handleClose();
+    } catch (error) {
+      console.log(error)
+    }
   };
   return (
     <div>

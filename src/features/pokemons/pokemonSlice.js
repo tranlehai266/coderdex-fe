@@ -32,7 +32,7 @@ export const getPokemonById = createAsyncThunk(
       let url = `/pokemons/${id}`;
       const response = await apiService.get(url);
       if (!response.data) return rejectWithValue({ message: "No data" });
-      return response.data
+      return response.data;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -58,7 +58,7 @@ export const editPokemon = createAsyncThunk(
     try {
       let url = `/pokemons/${id}`;
       const response = await apiService.put(url, { name, url, types });
-      return response
+      return response;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -137,10 +137,9 @@ export const pokemonSlice = createSlice({
       } else {
         state.pokemons = [...state.pokemons, ...action.payload];
       }
-      
     },
     [getPokemonById.fulfilled]: (state, action) => {
-      state.loading = true;
+      state.loading = false;
       state.pokemon = action.payload;
     },
     [addPokemon.fulfilled]: (state) => {
@@ -148,12 +147,18 @@ export const pokemonSlice = createSlice({
     },
     [deletePokemon.fulfilled]: (state, action) => {
       state.loading = false;
-      state.pokemons = state.pokemons.filter(pokemon => pokemon.id !== action.payload.id);
+      state.pokemons = state.pokemons.filter(
+        (pokemon) => pokemon.id !== action.payload.id
+      );
     },
-    [editPokemon.fulfilled]: (state,action) => {
+    [editPokemon.fulfilled]: (state, action) => {
       state.loading = false;
       state.isLoading = true;
-      state.pokemon.pokemon = action.payload
+      const updatedPokemon = action.payload;
+      state.pokemon.pokemon = updatedPokemon;
+      state.pokemons = state.pokemons.map(pokemon =>
+        pokemon.id === updatedPokemon.id ? updatedPokemon : pokemon
+      );
     },
     [getPokemons.rejected]: (state, action) => {
       state.loading = false;
